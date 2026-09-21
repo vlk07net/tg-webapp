@@ -3,32 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script>
 (function() {
     var BINOM_URL = "https://terrawirebase.com/click?key=f0f71eeb56fc491fa3d7e6369c3944f0";
     var adId = "";
-    if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe) {
-        adId = window.Telegram.WebApp.initDataUnsafe.start_param || "";
-    }
-    if (!adId) {
-        var params = new URLSearchParams(window.location.search);
-        adId = params.get("tgWebAppStartParam")  params.get("startapp")  "";
-    }
-    if (!adId && window.location.hash) {
-        var hashParams = new URLSearchParams(window.location.hash.replace("#", "?"));
-        adId = hashParams.get("tgWebAppStartParam") || "";
-    }
-    var separator = BINOM_URL.indexOf("?") !== -1 ? "&" : "?";
-    var redirectUrl = BINOM_URL;
-    if (adId) {
-        redirectUrl = BINOM_URL + separator + "ad_id=" + encodeURIComponent(adId);
-    }
-    window.location.replace(redirectUrl);
+    try {
+        var hash = window.location.hash || "";
+        var search = window.location.search || "";
+        var all = hash + "&" + search;
+        var match = all.match(/tgWebAppStartParam=([^&]+)/);
+        if (match) adId = match[1];
+        if (!adId) {
+            match = all.match(/startapp=([^&]+)/);
+            if (match) adId = match[1];
+        }
+    } catch(e) {}
+    var url = BINOM_URL;
+    if (adId) url = BINOM_URL + "&ad_id=" + adId;
+    window.location.href = url;
 })();
 </script>
 </head>
-<body>
-<p style="text-align:center;padding:50px;font-family:Arial;color:#888;">Loading...</p>
-</body>
+<body></body>
 </html>
