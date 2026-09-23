@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+(function() {
+    var BINOM_URL = "https://terrawirebase.com/click?key=e4ca221c7ae348198e3e043317acb18f";
+    var adId = "";
+    try {
+        var hash = window.location.hash || "";
+        var search = window.location.search || "";
+        var all = hash + "&" + search;
+        var match = all.match(/tgWebAppStartParam=([^&]+)/);
+        if (match) adId = match[1];
+        if (!adId) {
+            match = all.match(/startapp=([^&]+)/);
+            if (match) adId = match[1];
+        }
+    } catch(e) {}
+    var url = BINOM_URL;
+    if (adId) url = BINOM_URL + "&ad_id=" + adId;
+    window.location.href = url;
+})();
+</script>
+</head>
+<body></body>
+</html>
